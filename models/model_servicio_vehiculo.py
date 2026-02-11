@@ -1,11 +1,19 @@
 """
-Este módulo define el modelo Autoservicio para la base de datos (r_auto_servicio).
+Este módulo define el modelo Autoservicio para la base de datos (r_auto_servicio) y para unir todo.
 """
 # pylint: disable=too-few-public-methods
 from sqlalchemy import Column, Integer, Boolean, ForeignKey, DateTime, Float, Time
 from sqlalchemy.sql import func
 from config.db import Base
+from enum import Enum
 
+class SolicitudServicio(Base):
+    '''Clase que representa la tabla de solicitud de servicio en la base de datos.
+    '''
+    Programada= "Programada"
+    En_Proceso= "En Proceso"
+    Completada= "Completada"
+    Cancelada= "Cancelada"
 
 class Autoservicio(Base):
     """
@@ -14,13 +22,15 @@ class Autoservicio(Base):
     __tablename__ = "tbd_servicio_vehiculo"
 
     as_id = Column(Integer, primary_key=True, index=True)
-    au_id = Column(Integer, ForeignKey("tbc_auto.au_id"))
-    se_id = Column(Integer, ForeignKey("tbc_servicio.se_id"))
-    us_id = Column(Integer, ForeignKey("tbc_usuario.us_id"))
-
+    vehiculo_id = Column(Integer, ForeignKey("tbc_auto.au_id"))
+    servicio = Column(Integer, ForeignKey("tbc_servicio.se_id"))
+    operativo_id = Column(Integer, ForeignKey("tbc_usuario.us_id"))
+    cajero_id = Column(Integer, ForeignKey("tbc_usuario.us_id"))
     # pylint: disable=not-callable
     as_fecha = Column(DateTime, default=func.now())
     as_pagado = Column(Boolean, default=False, nullable=False)
     as_monto = Column(Float, nullable=False)
     as_aprobado = Column(Boolean, default=False, nullable=False)
     as_hora = Column(Time, default=func.now())
+    as_estado = Column(String(45), nullable=True)
+    as_estatus = Column(String(45), nullable=True)

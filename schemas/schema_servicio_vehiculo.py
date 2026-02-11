@@ -1,18 +1,21 @@
 '''Doctstring for the schema_servicio_vehiculo module.'''
 from datetime import datetime as datatime
-from pydantic import BaseModel
 from typing import Optional as optional
+from pydantic import BaseModel
 
 class ServicioVehiculoBase(BaseModel):
     '''Clase base para el esquema de servicio de vehículo'''
-    au_id: int
-    se_id: int
-    us_id: int
-    as_fecha: datatime
-    as_pagado: bool
-    as_monto: float
-    as_aprobado: bool
-    as_hora: datatime
+    vehiculo_id:str 
+    servicio:str
+    operativo_id:str 
+    cajero_id:str
+    as_fecha:datatime
+    as_pagado:bool = False
+    as_monto:float
+    as_aprobado:bool = False
+    as_hora:datatime
+    as_estado:optional[str] = None
+    as_estatus:optional[str] = None
 
 #pylint: disable=too-few-public-methods
 class ServicioVehiculoCreate(ServicioVehiculoBase):
@@ -27,4 +30,3 @@ class ServicioVehiculo(ServicioVehiculoBase):
     class Config:
         '''Configuración para permitir la conversión de objetos ORM a modelos Pydantic'''
         orm_mode = True
-

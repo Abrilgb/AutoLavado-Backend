@@ -11,10 +11,11 @@ class UserBase(BaseModel):
     nombre: str
     papellido: str
     sapellido: str
+    usuario: str
     direccion: str
     correo: str
     telefono: str
-    contrasena: str
+    password: str
     estatus: bool
     fecha_registro: datatime
     fecha_modificacion: datatime

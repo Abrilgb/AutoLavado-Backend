@@ -1,15 +1,18 @@
 ''' Doctsring de la clase SchemaServicios '''
 from datetime import datetime as datatime
-from pydantic import BaseModel
 from typing import Optional as optional
+from pydantic import BaseModel
+
 
 class ServicioBase(BaseModel):
     '''Clase base para el schema de servicio'''
-    fecha: datatime
-    monto: int 
-    aprobado: bool
-    pagado: int 
-    hora: datatime
+    nombre: str
+    descripcion: optional[str] = None
+    costo: float
+    estatus: optional[str] = None
+    fecha_registro: datatime
+    fecha_modificacion: datatime
+
 
 #pylint: disable=too-few-public-methods
 
@@ -25,5 +28,3 @@ class Servicio(ServicioBase):
     class Config:
         '''Configuración para permitir la conversión de objetos ORM a modelos Pydantic'''
         orm_mode = True
-
-

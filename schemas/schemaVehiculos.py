@@ -1,14 +1,19 @@
+# pylint: disable=invalid-name
 ''' Docstring for the schema_vehiculos module.'''
 from datetime import datetime as datatime
-from pydantic import BaseModel
 from typing import Optional as optional
+from pydantic import BaseModel
 
 class VehiculoBase(BaseModel):
     '''Clase base para el esquema de vehículo'''
-    modelo: str
-    matricula: int 
-    color: optional[str] = None
-    tipo: optional[str] = None
+    au_modelo:str
+    au_serie:str
+    au_color:str
+    au_estado:str
+    au_placa:optional[str] = None
+    au_tipo: str
+    au_anio:datatime
+    au_fecha_actualizacion:datatime
 
 #pylint: disable=too-few-public-methods
 

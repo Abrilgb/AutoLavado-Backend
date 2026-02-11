@@ -16,3 +16,5 @@ class Rol(Base):
     id = Column(Integer, primary_key=True, index=True)
     descripcion = Column(String(60), nullable=True)
     estatus = Column(Boolean, default=True)
+    fecha_registro = Column(String(45), nullable=True)
+    fecha_modificacion = Column(String(45), nullable=True)

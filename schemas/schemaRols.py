@@ -1,7 +1,6 @@
 """
 Esquema para el rol de usuario
 """
-
 from datetime import datetime
 from pydantic import BaseModel
 
