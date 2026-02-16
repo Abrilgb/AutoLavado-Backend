@@ -1,0 +1,11 @@
+#Ignorar archivo de variables de entorno y carpeta de la API
+.env
+
+#Ignorar carpeta competa 
+EntoernoApi/
+
+#ignorar ccarpeta __pycache__
+__pycache__
+
+#Ignorar archivos compilados de python 
+*.pyc

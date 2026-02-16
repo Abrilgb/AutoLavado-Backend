@@ -23,5 +23,5 @@ class Vehiculo(Base):
     au_tipo = Column(String(45), nullable=True)
     au_anio = Column(Integer, nullable=True)
     au_fecha_actualizacion = Column(String(45), nullable=True)
-    # Asegúrate de que 'tbc_cliente' sea el nombre correcto de la tabla Cliente
-    cl_id = Column(Integer, ForeignKey("tbc_cliente.cl_id"))
+    # TODO: Asegúrate de que 'tbc_cliente' sea el nombre correcto de la tabla Cliente
+    # cl_id = Column(Integer, ForeignKey("tbc_cliente.cl_id"))
