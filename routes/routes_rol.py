@@ -22,7 +22,7 @@ def get_db():
 
 @router.get("/", response_model=list[schemas.Rol])
 def read_roles(db: Session = Depends(get_db)):
-    return crud.get_rol(db)
+    return crud.get_roles(db)
 
 
 @router.post("/", response_model=schemas.Rol)

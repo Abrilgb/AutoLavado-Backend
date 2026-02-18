@@ -9,7 +9,7 @@ class VehiculoBase(BaseModel):
     au_estado: str
     au_placa: Optional[str] = None
     au_tipo: str
-    au_anio: datetime
+    au_anio: int
 
 class VehiculoCreate(VehiculoBase):
     pass
@@ -18,7 +18,6 @@ class VehiculoUpdate(VehiculoBase):
     pass
 
 class Vehiculo(VehiculoBase):
-    id: int
+    au_id: int
     au_fecha_actualizacion: datetime
-
     model_config = ConfigDict(from_attributes=True)

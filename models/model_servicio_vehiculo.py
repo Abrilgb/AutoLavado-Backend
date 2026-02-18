@@ -23,7 +23,7 @@ class Autoservicio(Base):
 
     as_id = Column(Integer, primary_key=True, index=True)
     vehiculo_id = Column(Integer, ForeignKey("tbb_vehiculo.au_id"))
-    servicio = Column(Integer, ForeignKey("tbb_servicio_.Id"))
+    servicio_id = Column(Integer, ForeignKey("tbb_servicio_id"))
     operativo_id = Column(Integer, ForeignKey("tbb_usuario.id"))
     cajero_id = Column(Integer, ForeignKey("tbb_usuario.id"))
     # pylint: disable=not-callable

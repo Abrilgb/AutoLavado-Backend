@@ -20,9 +20,11 @@ class ServicioVehiculoBase(BaseModel):
 #pylint: disable=too-few-public-methods
 class ServicioVehiculoCreate(ServicioVehiculoBase):
     '''Esta clase se utiliza para crear un nuevo servicio de vehículo'''
+    pass
 
 class ServicioVehiculoUpdate(ServicioVehiculoBase):
     '''Esta clase se utiliza para actualizar un servicio de vehículo existente'''
+    pass
 
 class ServicioVehiculo(ServicioVehiculoBase):
     '''Esta clase se utiliza para representar un servicio de vehículo en la respuesta de la API'''
