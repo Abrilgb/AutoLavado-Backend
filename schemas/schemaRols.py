@@ -1,35 +1,18 @@
-"""
-Esquema para el rol de usuario
-"""
 from datetime import datetime
-from pydantic import BaseModel
-
-# pylint: disable=too-few-public-methods
-
+from pydantic import BaseModel, ConfigDict
 
 class RolBase(BaseModel):
-    """Clase base para el esquema de rol"""
-
-    nombre: str
-    estatus: bool
-    fecha_registro: datetime
-    fecha_modificacion: datetime
-
+    ro_descripcion: str
+    ro_estatus: bool = True
+    ro_fecha_registro: datetime | None = None
+    ro_fecha_modificacion: datetime | None = None
 
 class RolCreate(RolBase):
-    """Se utiliza para crear un nuevo rol"""
-
+    pass
 
 class RolUpdate(RolBase):
-    """Se utiliza para actualizar un rol existente"""
-
+    pass
 
 class Rol(RolBase):
-    """Representa un rol en la respuesta de la API"""
-
-    id: int
-
-    class Config:
-        """Permite convertir objetos ORM a modelos Pydantic"""
-
-        orm_mode = True
+    ro_id: int
+    model_config = ConfigDict(from_attributes=True)

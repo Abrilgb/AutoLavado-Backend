@@ -1,32 +1,24 @@
-# pylint: disable=invalid-name
-''' Docstring for the schema_vehiculos module.'''
-from datetime import datetime as datatime
-from typing import Optional as optional
-from pydantic import BaseModel
+from datetime import datetime
+from typing import Optional
+from pydantic import BaseModel, ConfigDict
 
 class VehiculoBase(BaseModel):
-    '''Clase base para el esquema de vehículo'''
-    au_modelo:str
-    au_serie:str
-    au_color:str
-    au_estado:str
-    au_placa:optional[str] = None
+    au_modelo: str
+    au_serie: str
+    au_color: str
+    au_estado: str
+    au_placa: Optional[str] = None
     au_tipo: str
-    au_anio:datatime
-    au_fecha_actualizacion:datatime
-
-#pylint: disable=too-few-public-methods
+    au_anio: datetime
 
 class VehiculoCreate(VehiculoBase):
-    '''Esta clase se utiliza para crear un nuevo vehículo'''
+    pass
 
 class VehiculoUpdate(VehiculoBase):
-    '''Esta clase se utiliza para actualizar un vehículo existente'''
+    pass
 
 class Vehiculo(VehiculoBase):
-    '''Esta clase se utiliza para representar un vehículo en la respuesta de la API'''
     id: int
-    class Config:
-        '''Configuración para permitir la conversión de objetos ORM a modelos Pydantic'''
-        orm_mode = True
+    au_fecha_actualizacion: datetime
 
+    model_config = ConfigDict(from_attributes=True)

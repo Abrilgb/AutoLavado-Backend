@@ -14,8 +14,8 @@ class User(Base):
     __tablename__ = "tbb_usuario"
 
     id = Column(Integer, primary_key=True, index=True)
-    # Asegúrate de que la tabla 'tbc_roles' exista y tenga un campo 'id'
-    rol_id = Column(Integer, ForeignKey("tbc_roles.id"))
+    # Asegúrate de que la tabla 'tbc_rol' exista y tenga un campo 'ro_id'
+    rol_id = Column(Integer, ForeignKey("tbc_rol.ro_id"))
     nombre = Column(String(60), nullable=True)
     papellido = Column(String(60), nullable=True)
     sapellido = Column(String(60), nullable=True)

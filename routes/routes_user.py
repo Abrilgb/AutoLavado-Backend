@@ -1,11 +1,33 @@
-''' Docstring for the routes_vehiculo module.'''
-from fastapi import APIRouter
+''' Docstring for the routes_user module '''
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
 
-users = APIRouter()
+router = APIRouter(
+    prefix="/users",
+    tags=["Usuarios"]
+)
 
 
-@users.get("/user/", tags=["Users"])
-async def read_vehiculos():
-    '''Función para obtener todos los usuarios'''
+@router.get("/")
+async def read_users():
     return {"message": "Obteniendo usuarios"}
 
+
+@router.post("/")
+async def create_user():
+    return {"message": "Creando usuario"}
+
+
+@router.get("/{user_id}")
+async def read_user(user_id: int):
+    return {"message": f"Obteniendo usuario con ID {user_id}"}
+
+
+@router.put("/{user_id}")
+async def update_user(user_id: int):
+    return {"message": f"Actualizando usuario con ID {user_id}"}
+
+
+@router.delete("/{user_id}")
+async def delete_user(user_id: int):
+    return {"message": f"Eliminando usuario con ID {user_id}"}
