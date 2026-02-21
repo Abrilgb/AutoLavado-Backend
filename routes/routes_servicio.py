@@ -29,25 +29,25 @@ def create_servicio(servicio: schemas.ServiciosCreate, db: Session = Depends(get
 
 
 
-@router.get("/{id}", response_model=schemas.Servicio)
-def read_servicio(id: int, db: Session = Depends(get_db)):
-    servicio = crud.get_servicio_by_id(db, id)
+@router.get("/{servicio_id}", response_model=schemas.Servicio)
+def read_servicio(servicio_id: int, db: Session = Depends(get_db)):
+    servicio = crud.get_servicio_by_id(db, servicio_id)
     if not servicio:
         raise HTTPException(status_code=404, detail="Servicio no encontrado")
     return servicio
 
 
-@router.put("/{id}", response_model=schemas.Servicio)
-def update_servicio(id: int, servicio: schemas.ServiciosUpdate, db: Session = Depends(get_db)):
-    updated_servicio = crud.update_servicio(db, id, servicio)
+@router.put("/{servicio_id}", response_model=schemas.Servicio)
+def update_servicio(servicio_id: int, servicio: schemas.ServiciosUpdate, db: Session = Depends(get_db)):
+    updated_servicio = crud.update_servicio(db, servicio_id, servicio)
     if not updated_servicio:
         raise HTTPException(status_code=404, detail="Servicio no encontrado")
     return updated_servicio
 
 
-@router.delete("/{id}")
-def delete_servicio(id: int, db: Session = Depends(get_db)):
-    success = crud.delete_servicio(db, id)
+@router.delete("/{servicio_id}")
+def delete_servicio(servicio_id: int, db: Session = Depends(get_db)):
+    success = crud.delete_servicio(db, servicio_id)
     if not success:
         raise HTTPException(status_code=404, detail="Servicio no encontrado")
     return {"detail": "Servicio eliminado exitosamente"}

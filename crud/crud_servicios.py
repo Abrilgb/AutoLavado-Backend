@@ -1,13 +1,12 @@
-''' Docstring for the crud_rols module.'''
-from datetime import datetime
-import models.modelsServicios
-from schemas.schemaServicios import ServiciosCreate  
 from sqlalchemy.orm import Session
+import models.modelsServicios
+from schemas.schemaServicios import ServiciosCreate
 
-#pylint: disable=too-few-public-methods
 
-def get_servicio(db: Session, skip: int=0, limit: int=10):
-    return db.query(models.modelsServicios.Servicios).offset(skip).limit(limit).all()
+def get_servicio(db: Session, skip: int = 0, limit: int = 10):
+    return db.query(models.modelsServicios.Servicios)\
+             .offset(skip).limit(limit).all()
+
 
 def create_servicio(db: Session, servicio: ServiciosCreate):
     db_servicio = models.modelsServicios.Servicios(
@@ -23,20 +22,24 @@ def create_servicio(db: Session, servicio: ServiciosCreate):
     db.refresh(db_servicio)
     return db_servicio
 
+
 def delete_servicio(db: Session, servicio_id: int):
     db_servicio = db.query(models.modelsServicios.Servicios).filter(
-        models.modelsServicios.Servicios.Id == servicio_id
+        models.modelsServicios.Servicios.servicio_id == servicio_id
     ).first()
+
     if db_servicio:
         db.delete(db_servicio)
         db.commit()
         return True
     return False
 
-def update_servicio(db: Session, servicio_id: int, servicio: ServiciosCreate):  # ← Mejor usar ServiciosCreate aquí también
+
+def update_servicio(db: Session, servicio_id: int, servicio: ServiciosCreate):
     db_servicio = db.query(models.modelsServicios.Servicios).filter(
-        models.modelsServicios.Servicios.Id == servicio_id
+        models.modelsServicios.Servicios.servicio_id == servicio_id
     ).first()
+
     if db_servicio:
         db_servicio.nombre = servicio.nombre
         db_servicio.descripcion = servicio.descripcion
@@ -44,10 +47,15 @@ def update_servicio(db: Session, servicio_id: int, servicio: ServiciosCreate):  
         db_servicio.estatus = servicio.estatus
         db_servicio.fecha_registro = servicio.fecha_registro
         db_servicio.fecha_modificacion = servicio.fecha_modificacion
+
         db.commit()
         db.refresh(db_servicio)
         return db_servicio
+
     return None
 
+
 def get_servicio_by_id(db: Session, servicio_id: int):
-   return db.query(Servicios).filter(models.modelsServicios.servicios_id == servicio_id).first()
+    return db.query(models.modelsServicios.Servicios).filter(
+        models.modelsServicios.Servicios.servicio_id == servicio_id
+    ).first()

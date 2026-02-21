@@ -8,17 +8,18 @@ from pydantic import BaseModel
 
 class UserBase(BaseModel):
     '''Clase base para el esquema de usuario'''
-    nombre: str
-    papellido: str
-    sapellido: str
-    usuario: str
-    direccion: str
-    correo: str
-    telefono: str
-    password: str
-    estatus: bool
-    fecha_registro: datatime
-    fecha_modificacion: datatime
+    nombre: optional[str] = None
+    papellido: optional[str] = None
+    sapellido: optional[str] = None
+    usuario: optional[str] = None
+    direccion: optional[str] = None
+    correo: optional[str] = None
+    telefono: optional[str] = None
+    password: optional[str] = None
+    estatus: bool = True
+    rol_id: optional[int] = None
+    fecha_registro: optional[datatime] = None
+    fecha_modificacion: optional[datatime] = None
 
 #pylint: disable=too-few-public-methods
 class UserCreate(UserBase):
@@ -30,9 +31,8 @@ class UserUpdate(UserBase):
 class User(UserBase):
     '''Esta clase se utiliza para representar un usuario en la respuesta de la API'''
     id: int
-    class Config:
-        '''Configuración para permitir la conversión de objetos ORM a modelos Pydantic'''
-        orm_mode = True
+
+    model_config = {"from_attributes": True}
 
 class UserLogin(BaseModel):
     '''Clase para el esquema de inicio de sesión de usuario'''
