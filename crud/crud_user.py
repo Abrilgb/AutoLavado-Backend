@@ -1,6 +1,7 @@
 ''' Docstring for the crud_user module.'''
 from datetime import datetime
 
+from config.security import hash_password
 from models.modelUser import User
 from schemas.schemaUsuario import UserCreate, UserUpdate
 from sqlalchemy.orm import Session
@@ -19,7 +20,7 @@ def create_user(db: Session, user: UserCreate):
         direccion=user.direccion,
         correo=user.correo,
         telefono=user.telefono,
-        password=user.password,
+        password=hash_password(user.password) if user.password else None,
         estatus=user.estatus,
         rol_id=user.rol_id,
         fecha_registro=user.fecha_registro or datetime.utcnow(),
@@ -50,7 +51,8 @@ def update_user(db: Session, user_id: int, user: UserUpdate):
         db_user.direccion = user.direccion
         db_user.correo = user.correo
         db_user.telefono = user.telefono
-        db_user.password = user.password
+        if user.password:
+            db_user.password = hash_password(user.password)
         db_user.estatus = user.estatus
         db_user.rol_id = user.rol_id
         db_user.fecha_modificacion = user.fecha_modificacion or datetime.utcnow()

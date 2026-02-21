@@ -4,7 +4,7 @@
 from datetime import datetime as datatime
 from typing import Optional as optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class UserBase(BaseModel):
     '''Clase base para el esquema de usuario'''
@@ -31,6 +31,7 @@ class UserUpdate(UserBase):
 class User(UserBase):
     '''Esta clase se utiliza para representar un usuario en la respuesta de la API'''
     id: int
+    password: optional[str] = Field(default=None, exclude=True)  # No exponer el hash en la API
 
     model_config = {"from_attributes": True}
 
