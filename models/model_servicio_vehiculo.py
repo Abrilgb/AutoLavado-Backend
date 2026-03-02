@@ -22,10 +22,10 @@ class Autoservicio(Base):
     __tablename__ = "tbd_servicio_vehiculo"
 
     as_id = Column(Integer, primary_key=True, index=True)
-    vehiculo_id = Column(Integer, ForeignKey("tbb_vehiculo.au_id"))
-    servicio_id = Column(Integer, ForeignKey("tbb_servicio_id.servicio_id"))
-    operativo_id = Column(Integer, ForeignKey("tbb_usuario.id"))
-    cajero_id = Column(Integer, ForeignKey("tbb_usuario.id"))
+    vehiculo_id = Column(Integer, ForeignKey("tbb_vehiculo.au_id"), nullable=False)
+    servicio_id = Column(Integer, ForeignKey("tbc_servicio.servicio_id"), nullable=False)
+    operativo_id = Column(Integer, ForeignKey("tbb_usuario.id"), nullable=False)
+    cajero_id = Column(Integer, ForeignKey("tbb_usuario.id"), nullable=False)
     # pylint: disable=not-callable
     as_fecha = Column(DateTime, default=func.now())
     as_pagado = Column(Boolean, default=False, nullable=False)

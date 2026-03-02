@@ -4,6 +4,8 @@ from config.db import SessionLocal
 import crud.crud_vehiculo as crud
 import schemas.schemaVehiculos as schemas
 
+from config.auth import get_current_user
+
 router = APIRouter(
     prefix="/vehiculos",
     tags=["Vehículos"]
@@ -17,15 +19,15 @@ def get_db():
         db.close()
 
 @router.get("/", response_model=list[schemas.Vehiculo])
-def read_vehiculos(db: Session = Depends(get_db)):
+def read_vehiculos(db: Session = Depends(get_db), current_user = Depends(get_current_user)):
     return crud.get_vehiculos(db)
 
 @router.post("/", response_model=schemas.Vehiculo)
-def create_vehiculo(vehiculo: schemas.VehiculoCreate, db: Session = Depends(get_db)):
+def create_vehiculo(vehiculo: schemas.VehiculoCreate, db: Session = Depends(get_db), current_user = Depends(get_current_user)):
     return crud.create_vehiculo(db, vehiculo)
 
 @router.get("/{vehiculo_id}", response_model=schemas.Vehiculo)
-def read_vehiculo(vehiculo_id: int, db: Session = Depends(get_db)):
+def read_vehiculo(vehiculo_id: int, db: Session = Depends(get_db), current_user = Depends(get_current_user)):
     vehiculo = crud.get_vehiculo_by_id(db, vehiculo_id)
     if not vehiculo:
         raise HTTPException(status_code=404, detail="Vehículo no encontrado")
@@ -35,7 +37,7 @@ def read_vehiculo(vehiculo_id: int, db: Session = Depends(get_db)):
 def update_vehiculo(
     vehiculo_id: int,
     vehiculo: schemas.VehiculoUpdate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db), current_user = Depends(get_current_user)
 ):
     vehiculo_db = crud.update_vehiculo(db, vehiculo_id, vehiculo)
     if not vehiculo_db:
@@ -43,7 +45,7 @@ def update_vehiculo(
     return vehiculo_db
 
 @router.delete("/{vehiculo_id}", response_model=schemas.Vehiculo)
-def delete_vehiculo(vehiculo_id: int, db: Session = Depends(get_db)):
+def delete_vehiculo(vehiculo_id: int, db: Session = Depends(get_db), current_user = Depends(get_current_user)):
     vehiculo = crud.delete_vehiculo(db, vehiculo_id)
     if not vehiculo:
         raise HTTPException(status_code=404, detail="Vehículo no encontrado")

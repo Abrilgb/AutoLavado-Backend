@@ -9,14 +9,15 @@ from config.db import Base
 
 class Servicios(Base):
     """
-    Clase que representa la tabla tbb_servicio_id en la base de datos.
+    Clase que representa la tabla tbc_servicio en la base de datos.
     """
-    __tablename__ = "tbb_servicio_id"
+    __tablename__ = "tbc_servicio"
     
     servicio_id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String(45), nullable=False)
     descripcion = Column(String(45), nullable=True)
     costo = Column(Float, nullable=False)
+    duracion = Column(Integer, nullable=True)
     estatus = Column(String(45), nullable=True)
     fecha_registro = Column(DateTime, default=func.now())
     fecha_modificacion = Column(DateTime, default=func.now(), onupdate=func.now())

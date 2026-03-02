@@ -14,6 +14,7 @@ from routes.routes_vehiculo import router as vehiculo_router
 from routes.routes_servicio import router as servicio_router
 from routes.routes_servicio_vehiculo import router as servicio_vehiculo_router
 from routes.routes_user import router as user_router
+from routes.routes_auth import router as auth_router
 
 
 app = FastAPI(
@@ -29,6 +30,7 @@ models.modelsServicios.Base.metadata.create_all(bind=config.db.engine)
 models.model_servicio_vehiculo.Base.metadata.create_all(bind=config.db.engine)
 
 # Registrar routers
+app.include_router(auth_router)
 app.include_router(rol_router)
 app.include_router(vehiculo_router)
 app.include_router(servicio_router)

@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 import crud.crud_servicios as crud
 import schemas.schemaServicios as schemas
 from config.db import SessionLocal
+from config.auth import get_current_user
 
 router = APIRouter(
     prefix="/servicios",
@@ -19,18 +20,18 @@ def get_db():
 
 
 @router.get("/", response_model=list[schemas.Servicio])
-def read_servicios(db: Session = Depends(get_db)):
+def read_servicios(db: Session = Depends(get_db), current_user = Depends(get_current_user)): 
     return crud.get_servicio(db)
 
 
 @router.post("/", response_model=schemas.Servicio)
-def create_servicio(servicio: schemas.ServiciosCreate, db: Session = Depends(get_db)):
+def create_servicio(servicio: schemas.ServiciosCreate, db: Session = Depends(get_db), current_user = Depends(get_current_user)):
     return crud.create_servicio(db, servicio)
 
 
 
 @router.get("/{servicio_id}", response_model=schemas.Servicio)
-def read_servicio(servicio_id: int, db: Session = Depends(get_db)):
+def read_servicio(servicio_id: int, db: Session = Depends(get_db), current_user = Depends(get_current_user)):
     servicio = crud.get_servicio_by_id(db, servicio_id)
     if not servicio:
         raise HTTPException(status_code=404, detail="Servicio no encontrado")
@@ -38,7 +39,7 @@ def read_servicio(servicio_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/{servicio_id}", response_model=schemas.Servicio)
-def update_servicio(servicio_id: int, servicio: schemas.ServiciosUpdate, db: Session = Depends(get_db)):
+def update_servicio(servicio_id: int, servicio: schemas.ServiciosUpdate, db: Session = Depends(get_db), current_user = Depends(get_current_user)):
     updated_servicio = crud.update_servicio(db, servicio_id, servicio)
     if not updated_servicio:
         raise HTTPException(status_code=404, detail="Servicio no encontrado")
@@ -46,7 +47,7 @@ def update_servicio(servicio_id: int, servicio: schemas.ServiciosUpdate, db: Ses
 
 
 @router.delete("/{servicio_id}")
-def delete_servicio(servicio_id: int, db: Session = Depends(get_db)):
+def delete_servicio(servicio_id: int, db: Session = Depends(get_db) , current_user = Depends(get_current_user)):
     success = crud.delete_servicio(db, servicio_id)
     if not success:
         raise HTTPException(status_code=404, detail="Servicio no encontrado")

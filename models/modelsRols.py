@@ -3,7 +3,7 @@ from config.db import Base
 from datetime import datetime
 
 class Rol(Base):
-    __tablename__ = "tbc_rol"
+    __tablename__ = "tbc_roles"
 
     ro_id = Column(Integer, primary_key=True, index=True)
     ro_descripcion = Column(String(100), nullable=False)

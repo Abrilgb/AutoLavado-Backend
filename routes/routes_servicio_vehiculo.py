@@ -6,6 +6,8 @@ import crud.crud_servicio_vehiculo as crud
 import schemas.schema_servicio_vehiculo as schemas
 from config.db import SessionLocal
 
+from config.auth import get_current_user
+
 router = APIRouter(
     prefix="/servicio-vehiculo",
     tags=["Servicio-Vehículo"]
@@ -21,14 +23,14 @@ def get_db():
 
 
 @router.get("/", response_model=list[schemas.ServicioVehiculo])
-async def read_servicio_vehiculo(db: Session = Depends(get_db)):
+async def read_servicio_vehiculo(db: Session = Depends(get_db), current_user = Depends(get_current_user)):
     return crud.get_servicio_vehiculo(db)
 
 
 @router.post("/", response_model=schemas.ServicioVehiculo)
 async def create_servicio_vehiculo(
     servicio_vehiculo: schemas.ServicioVehiculoCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db), current_user = Depends(get_current_user)
 ):
     try:
         return crud.create_servicio_vehiculo(db, servicio_vehiculo)
@@ -44,7 +46,7 @@ async def create_servicio_vehiculo(
 @router.get("/{as_id}", response_model=schemas.ServicioVehiculo)
 async def read_servicio_vehiculo_by_id(
     as_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db), current_user = Depends(get_current_user)
 ):
     servicio = crud.get_servicio_vehiculo_by_id(db, as_id)
     if not servicio:
@@ -56,7 +58,7 @@ async def read_servicio_vehiculo_by_id(
 async def update_servicio_vehiculo(
     as_id: int,
     servicio_vehiculo: schemas.ServicioVehiculoUpdate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db), current_user = Depends(get_current_user)
 ):
     try:
         updated = crud.update_servicio_vehiculo(db, as_id, servicio_vehiculo)
@@ -70,7 +72,7 @@ async def update_servicio_vehiculo(
 @router.delete("/{as_id}")
 async def delete_servicio_vehiculo(
     as_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db), current_user = Depends(get_current_user)
 ):
     deleted = crud.delete_servicio_vehiculo(db, as_id)
     if not deleted:

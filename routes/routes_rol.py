@@ -6,6 +6,8 @@ import crud.crud_rols as crud
 import schemas.schemaRols as schemas
 from config.db import SessionLocal
 
+from config.auth import get_current_user
+
 router = APIRouter(
     prefix="/roles",
     tags=["Roles"]
@@ -28,13 +30,13 @@ def read_roles(db: Session = Depends(get_db)):
 @router.post("/", response_model=schemas.Rol)
 def create_role(
     rol: schemas.RolCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db), current_user = Depends(get_current_user)
 ):
     return crud.create_rol(db, rol)
 
 
 @router.get("/{rol_id}", response_model=schemas.Rol)
-def read_role(rol_id: int, db: Session = Depends(get_db)):
+def read_role(rol_id: int, db: Session = Depends(get_db), current_user = Depends(get_current_user)):
     db_rol = crud.get_rol_by_id(db, rol_id)
     if not db_rol:
         raise HTTPException(status_code=404, detail="Rol no encontrado")
@@ -45,7 +47,7 @@ def read_role(rol_id: int, db: Session = Depends(get_db)):
 def update_role(
     rol_id: int,
     rol: schemas.RolUpdate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db), current_user = Depends(get_current_user)
 ):
     db_rol = crud.update_rol(db, rol_id, rol)
     if not db_rol:
@@ -54,7 +56,7 @@ def update_role(
 
 
 @router.delete("/{rol_id}", response_model=schemas.Rol)
-def delete_role(rol_id: int, db: Session = Depends(get_db)):
+def delete_role(rol_id: int, db: Session = Depends(get_db), current_user = Depends(get_current_user)):
     db_rol = crud.delete_rol(db, rol_id)
     if not db_rol:
         raise HTTPException(status_code=404, detail="Rol no encontrado")

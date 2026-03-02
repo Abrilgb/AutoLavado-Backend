@@ -2,7 +2,7 @@
 Este módulo define el modelo Vehiculo para la base de datos.
 """
 # pylint: disable=too-few-public-methods
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from config.db import Base
 
 
@@ -13,6 +13,7 @@ class Vehiculo(Base):
     __tablename__ = "tbb_vehiculo"
 
     au_id = Column(Integer, primary_key=True, index=True)
+    usuario_id = Column(Integer, ForeignKey("tbb_usuario.id"), nullable=False)
     au_modelo = Column(String(45), nullable=False)
     au_serie = Column(String(45), nullable=False, unique=True)
     au_color = Column(String(45), nullable=True)

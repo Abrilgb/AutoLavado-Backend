@@ -67,3 +67,12 @@ def update_user(db: Session, user_id: int, user: UserUpdate):
 def get_user_by_id(db: Session, user_id: int):
     return db.query(User).filter(User.id == user_id).first()
 
+
+def get_user_by_username(db: Session, username: str):
+    """Obtiene un usuario por su nombre de usuario."""
+    return db.query(User).filter(User.usuario == username).first()
+
+
+def get_user_by_email(db: Session, email: str):
+    """Obtiene un usuario por su correo."""
+    return db.query(User).filter(User.correo == email).first()

@@ -14,7 +14,7 @@ class User(Base):
     __tablename__ = "tbb_usuario"
 
     id = Column(Integer, primary_key=True, index=True)
-    rol_id = Column(Integer, ForeignKey("tbc_rol.ro_id"))
+    rol_id = Column(Integer, ForeignKey("tbc_roles.ro_id"))
     nombre = Column(String(60), nullable=True)
     papellido = Column(String(60), nullable=True)
     sapellido = Column(String(60), nullable=True)
